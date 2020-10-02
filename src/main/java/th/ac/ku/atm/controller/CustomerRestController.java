@@ -28,5 +28,4 @@ public class CustomerRestController {
     public Customer getOne(@PathVariable int id) {
         return customerService.findCustomer(id);
     }
-
 }
