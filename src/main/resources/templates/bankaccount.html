@@ -5,58 +5,49 @@
 
 <div class="container" layout:fragment="content">
 
-<body>
-<h1>Open Bank Account</h1>
+    <h1>Open Bank Account</h1>
+    <form th:action="@{/bankaccount}" method="POST">
 
-<form th:action="@{/bankaccount}" method="POST">
+        <div class="form-group">
+            <label for="inputCustomer">Customer Id</label>
+            <input type="text" class="form-control" name="customerId" id="inputCustomer">
+        </div>
 
-    <div class="form-group">
-        <label for="inputId">Id</label>
-        <input type="input" class="form-control" name="id" id="inputId">
-    </div>
+        <div class="form-group">
+            <label for="inputType">Type</label>
+            <input type="text" class="form-control" name="type" id="inputType">
+        </div>
 
-    <div class="form-group">
-        <label for="inputCusId">CustomerID</label>
-        <input type="input" class="form-control" name="customerId" id="inputCusId">
-    </div>
+        <div class="form-group">
+            <label for="inputBalance">Balance</label>
+            <input type="text" class="form-control" name="balance" id="inputBalance">
+        </div>
 
-    <div class="form-group">
-        <label for="inputType">Type</label>
-        <input type="input" class="form-control" name="type" id="inputType">
-    </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary">
+        </div>
 
-    <div class="form-group">
-        <label for="inputBalance">Balance</label>
-        <input type="number" step="0.01" class="form-control" name="balance" id="inputBalance">
-    </div>
+    </form>
+    <hr>
 
-    <div class="form-group">
-        <input type="submit" class="btn btn-primary">
-    </div>
+    <h1>All Bank Accounts</h1>
 
-</form>
-
-<hr>
-<table class="table table-bordered">
-    <thead class="thead-light">
-    <tr>
-        <th>Id</th>
-        <th>CustomerId</th>
-        <th>Type</th>
-        <th>Balance</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <tr th:each=" account: ${allBankAccounts}">
-        <td th:text="${account.id}"></td>
-        <td th:text="${account.customerId}"></td>
-        <td th:text="${account.type}"></td>
-        <td th:text="${account.balance}"></td>
-    </tr>
-    </tbody>
-</table>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-light">
+        <tr>
+            <th>Id</th>
+            <th>CustomerId</th>
+            <th>Type</th>
+            <th>Balance</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="account : ${bankaccounts}">
+            <td th:text="${account.id}"></td>
+            <td th:text="${account.customerId}"></td>
+            <td th:text="${account.type}"></td>
+            <td th:text="${account.balance}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-
-</body>
-</html>
