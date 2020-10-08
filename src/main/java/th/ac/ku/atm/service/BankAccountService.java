@@ -6,9 +6,7 @@ import org.springframework.web.client.RestTemplate;
 import th.ac.ku.atm.model.BankAccount;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class BankAccountService {
@@ -21,22 +19,17 @@ public class BankAccountService {
     }
 
     public List<BankAccount> getCustomerBankAccount(int customerId) {
-        String url = "http://localhost:8081/api/bankaccount/customer/" +
-                customerId;
-        ResponseEntity<BankAccount[]> response =
-                restTemplate.getForEntity(url, BankAccount[].class);
 
+        String url = "http://localhost:8081/api/bankaccount/customer/" + customerId;
+        ResponseEntity<BankAccount[]> response = restTemplate.getForEntity(url, BankAccount[].class);
         BankAccount[] accounts = response.getBody();
-
         return Arrays.asList(accounts);
+
     }
 
     @PostConstruct
-    public void postConstruct() {
-        this.bankAccountList = new ArrayList<>();
+    public void postConstruct() { this.bankAccountList = new ArrayList<>();
     }
-
-
 
     public void openAccount(BankAccount bankAccount) {
         String url = "http://localhost:8081/api/bankaccount";
@@ -47,9 +40,7 @@ public class BankAccountService {
     public List<BankAccount> getBankAccounts() {
         String url = "http://localhost:8081/api/bankaccount/";
 
-        ResponseEntity<BankAccount[]> response =
-                restTemplate.getForEntity(url, BankAccount[].class);
-
+        ResponseEntity<BankAccount[]> response = restTemplate.getForEntity(url, BankAccount[].class);
         BankAccount[] accounts = response.getBody();
         return Arrays.asList(accounts);
     }
@@ -57,20 +48,21 @@ public class BankAccountService {
     public BankAccount getBankAccount(int id) {
         String url = "http://localhost:8081/api/bankaccount/" + id;
 
-        ResponseEntity<BankAccount> response =
-                restTemplate.getForEntity(url, BankAccount.class);
-
+        ResponseEntity<BankAccount> response = restTemplate.getForEntity(url, BankAccount.class);
         return response.getBody();
     }
 
-    public void editBankAccount(BankAccount bankAccount) {
-        String url = "http://localhost:8081/api/bankaccount/" + bankAccount.getId();
-        restTemplate.put(url, bankAccount);
+    public void editBankAccount(BankAccount bankAccount, double cash, String action) {
+        String url = "http://localhost:8081/api/bankaccount/edit/" + bankAccount.getId();
+        TreeMap<String, Double> transaction = new TreeMap<>();
+        transaction.put(action,cash);
+        restTemplate.put(url, transaction);
     }
 
     public void deleteBankAccount(BankAccount bankAccount){
         String url = "http://localhost:8081/api/bankaccount/" + bankAccount.getId();
         restTemplate.delete(url, bankAccount);
     }
+
 
 }
